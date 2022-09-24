@@ -13,7 +13,7 @@ public class WebsiteApplication {
 		SpringApplication.run(WebsiteApplication.class, args);
 	}
 	
-	@GetMapping("")
+	@GetMapping("/")
 	public String home() {
 		return "hello world"; 
 	}
