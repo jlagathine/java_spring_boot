@@ -1,42 +1,58 @@
-package com.choisy.website.utilisateur;
+package com.choisy.website.users;
 
 import java.time.LocalDate;
+import java.time.Period;
 
-import javax.annotation.sql.DataSourceDefinitions;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-
-@Table
 @Entity
-public class utilisateurs {
+@Table
+public class Utilisateurs {
 
 	@Id
+	@SequenceGenerator(
+			name ="utilisateur_seq",
+			sequenceName = "utilisateur_seq",
+			allocationSize = 1
+	)
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "utilisateur_seq"
+			)
 	private long id;
 	private String nom;
 	private String prénom;
 	private String email;
 	private LocalDate date;
+	@Transient
 	private Integer age;
 	
-	public utilisateurs(long id, String nom, String prenom, String email, LocalDate date, Integer age) {
+	
+	
+	public Utilisateurs() {
+	}
+
+	public Utilisateurs(long id, String nom, String prenom, String email, LocalDate date) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.prénom = prenom;
 		this.email = email;
 		this.date = date;
-		this.age = age;
 	}
 
-	public utilisateurs(String nom, String prenom, String email, LocalDate date, Integer age) {
+	public Utilisateurs(String nom, String prenom, String email, LocalDate date) {
 		super();
 		this.nom = nom;
 		this.prénom = prenom;
 		this.email = email;
 		this.date = date;
-		this.age = age;
 	}
 
 	public long getId() {
@@ -80,7 +96,7 @@ public class utilisateurs {
 	}
 
 	public Integer getAge() {
-		return age;
+		return Period.between(this.date, LocalDate.now()).getYears();
 	}
 
 	public void setAge(Integer age) {
