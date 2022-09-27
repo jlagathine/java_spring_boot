@@ -25,8 +25,15 @@ public class ConfigUtilisateur {
 						"daniel@mail.com", 
 						LocalDate.of(2003, Month.AUGUST, 5) 
 						);
+				Utilisateurs David = new Utilisateurs( 
+						"NGOMA",
+						"David", 
+						"david@mail.com", 
+						LocalDate.of(2003, Month.JULY, 18) 
+						);
 				
-				repertoire.saveAll(List.of(Emmanuel, Danielle ));
+				repertoire.saveAll(List.of(Emmanuel, Danielle, David));
 			};
 		}
+		
 }

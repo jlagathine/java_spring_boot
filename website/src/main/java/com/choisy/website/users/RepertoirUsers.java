@@ -9,7 +9,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RepertoirUsers extends JpaRepository<Utilisateurs, Long> {
 
-//	SELECT * FROM utilisteurs WHERE email = ?
+//	 SELECT * FROM utilisteurs WHERE email = ?
 	@Query("SELECT s FROM Utilisateurs s WHERE s.email = ?1")
 	Optional<Utilisateurs> findUsersByEmail (String email);
+	
+	@Query("DELETE s FROM Utilisateurs s WHERE s.id = ?1")
+	Optional<Utilisateurs> findUsersById (long Id);
+	
 }
+
+
