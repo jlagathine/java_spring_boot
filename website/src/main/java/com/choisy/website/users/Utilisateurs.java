@@ -3,6 +3,7 @@ package com.choisy.website.users;
 import java.time.LocalDate;
 import java.time.Period;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,9 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
-@Entity
-@Table
+@Entity(name = "Utilisateurs")
+@Table (name = "utilisateurs", uniqueConstraints = {
+		@UniqueConstraint (name = "user_constraint_unique", columnNames = "email")
+})
 public class Utilisateurs {
 
 	@Id
@@ -25,17 +29,29 @@ public class Utilisateurs {
 			strategy = GenerationType.SEQUENCE,
 			generator = "utilisateur_seq"
 			)
+	@Column (name = "id", updatable = false)
 	private long id;
+	
+	@Column (name = "nom", nullable = false, columnDefinition = "TEXT")
 	private String nom;
+	
+	@Column (name = "prenom", nullable = false, columnDefinition = "TEXT")
 	private String prénom;
+	
+	@Column (name = "email", nullable = false, columnDefinition = "TEXT")
 	private String email;
+	
+	@Column (name = "date")
 	private LocalDate date;
+	
+	@Column (name = "age", nullable = false)
 	@Transient
 	private Integer age;
 	
 	
 	
 	public Utilisateurs() {
+		//Initialisation du bean
 	}
 
 	public Utilisateurs(long id, String nom, String prenom, String email, LocalDate date) {
