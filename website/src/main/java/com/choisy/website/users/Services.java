@@ -22,6 +22,8 @@ public class Services {
 	public List<Utilisateurs> users() {
 		return repertoirUsers.findAll(); 
 	}
+	
+	
 	public void  ajouterNewUser(Utilisateurs utilisateur) {
 		Optional<Utilisateurs> utiOptional =  repertoirUsers.findUsersByEmail(utilisateur.getEmail());
 		if(utiOptional.isPresent()) {
@@ -30,7 +32,7 @@ public class Services {
 		repertoirUsers.save(utilisateur);
 	}
 	
-	public void deleteUser(long userId) {
+	public void deleteUser(Long userId) {
 		Optional<Utilisateurs> exist =  repertoirUsers.findById(userId);
 		if(exist.isEmpty()) {
 			throw new IllegalStateException("Utilisateur non enregistré");
@@ -39,7 +41,7 @@ public class Services {
 	}
 	
 	@Transactional
-	public void updateUser(long userid, String nom, String email) {
+	public void updateUser(Long userid, String nom, String email) {
 		Utilisateurs uti = repertoirUsers.findById(userid).orElseThrow(() -> new IllegalStateException("Utilisateur non enregistré"));
 		
 		if(nom != null && nom.length() > 0 && !Objects.equals(uti.getNom(), nom)) {
@@ -55,12 +57,12 @@ public class Services {
 			uti.setEmail(email);
 	}
 	
-//	public Optional<Utilisateurs> getUilisateur(long id) {
-//		Optional<Utilisateurs> uti = repertoirUsers.findUsersById1(id);
-//				if(uti.isEmpty()) {
-//					throw new IllegalStateException("User non enregistré");	
-//				};
-//				return uti;
-//	}
+	public Optional<Utilisateurs> getUilisateur(Long id) {
+		Optional<Utilisateurs> uti = repertoirUsers.findById(id);
+				if(uti.isEmpty()) {
+					throw new IllegalStateException("User non enregistré");	
+				};
+				return uti;
+	}
 
 }

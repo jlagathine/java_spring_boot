@@ -33,6 +33,7 @@ public class ConfigUtilisateur {
 						);
 				
 				repertoire.saveAll(List.of(Emmanuel, Danielle, David));
+				
 			};
 		}
 		

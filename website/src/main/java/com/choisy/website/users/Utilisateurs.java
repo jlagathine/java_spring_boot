@@ -30,7 +30,7 @@ public class Utilisateurs {
 			generator = "utilisateur_seq"
 			)
 	@Column (name = "id", updatable = false)
-	private long id;
+	private Long id;
 	
 	@Column (name = "nom", nullable = false, columnDefinition = "TEXT")
 	private String nom;
@@ -54,7 +54,7 @@ public class Utilisateurs {
 		//Initialisation du bean
 	}
 
-	public Utilisateurs(long id, String nom, String prenom, String email, LocalDate date) {
+	public Utilisateurs(Long id, String nom, String prenom, String email, LocalDate date) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -71,11 +71,11 @@ public class Utilisateurs {
 		this.date = date;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -121,11 +121,10 @@ public class Utilisateurs {
 
 	@Override
 	public String toString() {
-		return "utilisateurs [id=" + id + ", nom=" + nom + ", prénom=" + prénom + ", email=" + email + ", date=" + date
-				+ ", age=" +age+ "]";
+		return "Utilisateurs [id=" + id + ", nom=" + nom + ", prénom=" + prénom + ", email=" + email + ", date=" + date
+				+ ", age=" + age + "]";
 	}
 
-	
 }
 
 

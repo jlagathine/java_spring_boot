@@ -27,12 +27,17 @@ public class PagesController {
 	}
 	
 	@GetMapping (path = "{utilisateurId}") 
-	public List<Utilisateurs> users(@PathVariable("utilisateurId") long userid){
-		return services.users();
-//		return ConfigUtilisateur.stream()
+	public Optional<Utilisateurs> users(@PathVariable("utilisateurId") Long userid){
+		return services.getUilisateur(userid);
+//		return STR.stream()
 //				.filter(user -> userid.equals(user.getId()))
 //				.findFirst()
 //				.orElseThrow(() -> new IllegalStateException("Cet utilisateur n'existe pas"));
+	}
+	
+	@GetMapping 
+	public List<Utilisateurs> Allusers(){
+		return services.users();
 	}
 	
 	@PostMapping
@@ -42,13 +47,13 @@ public class PagesController {
 	}
 	
 	@DeleteMapping (path = "{utilisateurId}")
-	public void deleteUser(@PathVariable("utilisateurId") long userid) {
+	public void deleteUser(@PathVariable("utilisateurId") Long userid) {
 		services.deleteUser(userid);
 	}
 	
 	@PutMapping (path = "{utilisateurId}")
 	public void updateUser (
-			@PathVariable("utilisateurId") long userid,
+			@PathVariable("utilisateurId") Long userid,
 			@RequestParam (required = false) String nom,
 			@RequestParam (required = false) String email
 			) {
