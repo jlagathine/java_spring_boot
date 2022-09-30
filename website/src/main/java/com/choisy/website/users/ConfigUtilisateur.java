@@ -26,7 +26,7 @@ public class ConfigUtilisateur {
 						LocalDate.of(2003, Month.AUGUST, 5) 
 						);
 				Utilisateurs David = new Utilisateurs( 
-						"NGOMA",
+						"JASON",
 						"David", 
 						"david@mail.com", 
 						LocalDate.of(2003, Month.JULY, 18) 

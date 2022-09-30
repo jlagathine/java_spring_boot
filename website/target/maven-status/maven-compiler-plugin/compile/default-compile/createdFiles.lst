@@ -1,6 +1,9 @@
-com\choisy\website\users\RepertoirUsers.class
 com\choisy\website\users\ConfigUtilisateur.class
 com\choisy\website\users\Utilisateurs.class
 com\choisy\website\users\PagesController.class
+com\choisy\website\security\SecurityApplication$SecurityConfiguration.class
 com\choisy\website\users\WebsiteApplication.class
+com\choisy\website\security\SecurityApplication.class
 com\choisy\website\users\Services.class
+com\choisy\website\security\MotDePasseConfing.class
+com\choisy\website\users\RepertoirUsers.class
