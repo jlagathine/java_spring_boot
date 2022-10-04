@@ -1,7 +1,10 @@
 package com.choisy.website.users;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +24,12 @@ public class GestionUtilisateur {
 		public GestionUtilisateur(Services services) {
 			this.services = services;
 		}
+		
+		@GetMapping 
+		public List<Utilisateurs> Allusers(){
+			return services.users();
+		}
+		
 
 		@PostMapping
 		public void  ajouterNewUser(@RequestBody Utilisateurs uti) {

@@ -41,10 +41,10 @@ public class Services {
 	}
 	
 	@Transactional
-	public void updateUser(Long userid, String nom, String email) {
+	public void updateUser(Long userid, String nom, String email) {//http://localhost:3000/gestion/api/v1/users/6?nom=GIRALDO&email=giraldo@mail.com
 		Utilisateurs uti = repertoirUsers.findById(userid).orElseThrow(() -> new IllegalStateException("Utilisateur non enregistré"));
 		
-		if(nom != null && nom.length() > 0 && !Objects.equals(uti.getNom(), nom)) {
+		if(nom != null && nom.length() > 0 && !Objects.equals(uti.getNom(), nom)){//verification de ce que la propriété "nom" existe) 
 			uti.setNom(nom);
 			}
 			

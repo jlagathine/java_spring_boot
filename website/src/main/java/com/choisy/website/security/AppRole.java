@@ -1,6 +1,9 @@
 package com.choisy.website.security;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.google.common.collect.Sets;
 
@@ -20,4 +23,11 @@ public enum AppRole {
 		return permission;
 	}
 	 
+	public Set<SimpleGrantedAuthority> getGrantedAuthorities(){
+		Set<SimpleGrantedAuthority> permission = getPermission().stream()
+													 .map(perms -> new SimpleGrantedAuthority(perms.getPermission()))
+													 .collect(Collectors.toSet());
+		permission.add(new SimpleGrantedAuthority("ROLE_"+this.name()));
+		return permission;
+	}
 }
