@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,32 +24,45 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 
 public class JwtTokenVerifier extends OncePerRequestFilter {
+    
+    private final JwtConfig jwtConfig;
+    private final SecretKey secretKey;
 
-	@Override
+	public JwtTokenVerifier(JwtConfig jwtConfig, SecretKey secretKey) {
+        this.jwtConfig = jwtConfig;
+        this.secretKey = secretKey;
+    }
+
+    @Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		String authorizationHeader = request.getHeader("Authorization");
+		String authorizationHeader = request.getHeader(jwtConfig.getAutorization());
 		
-		if(Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith("Bearer ")){
+		if(Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith(jwtConfig.getTokenPrefx())){
 			filterChain.doFilter(request, response);
 			return;
 			}
-		String token = authorizationHeader.replace("Bearer", "");
+		String token = authorizationHeader.replace(jwtConfig.getTokenPrefx(), "");
 	try {
 		
-		String secretKey = "superSecuresuperSecuresuperSecuresuperSecuresuperSecure";
-		Jws<Claims> claimsJws = Jwts.parser()
-			.setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
-			.parseClaimsJws(token);
+//		String secretKey = "superSecuresuperSecuresuperSecuresuperSecuresuperSecure";
+//		Jws<Claims> claimsJws = Jwts.parser()
+//			.setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
+//			.parseClaimsJws(token);
+		
+		Jws<Claims> claimsJws = Jwts.parserBuilder()
+				.setSigningKey(secretKey)
+				.build()
+				.parseClaimsJws(token);
 		
 		Claims body = claimsJws.getBody();
 		String username = body.getSubject();
 		
-		var authorities = (List<Map<String, String>>) body.get("authoroties");
+		@SuppressWarnings("unchecked")
+        var authorities = (List<Map<String, String>>) body.get("authoroties");
 		
 		Set<SimpleGrantedAuthority> grantedAuthorities = authorities.stream().map(m -> new SimpleGrantedAuthority(m.get("authority"))).collect(Collectors.toSet());
 		Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, grantedAuthorities);
@@ -58,6 +72,8 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 			}catch(JwtException e)
 		{throw new IllegalStateException(String.format("Le token %s n'est pas fiable", token));
 	}
+	
+	filterChain.doFilter(request, response);
 }
 
 }

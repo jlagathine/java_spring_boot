@@ -48,7 +48,7 @@ public class Services {
 			uti.setNom(nom);
 			}
 			
-		if(email != null && nom.length() > 0 && !Objects.equals(uti.getEmail(), email)) {
+		if(email != null && email.length() > 0 && !Objects.equals(uti.getEmail(), email)) {
 			Optional<Utilisateurs> utiOptional =  repertoirUsers.findUsersByEmail(email);
 			if(utiOptional.isPresent()) {
 				throw new IllegalStateException("Email déjà enregistré");

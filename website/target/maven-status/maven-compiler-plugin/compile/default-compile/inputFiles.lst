@@ -11,8 +11,11 @@ C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot
 C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot\website\src\main\java\com\choisy\website\security\MotDePasseConfing.java
 C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot\website\src\main\java\com\choisy\website\users\GestionUtilisateur.java
 C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot\website\src\main\java\com\choisy\website\jwt\JwtUsernamePwdAuthFilter.java
+C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot\website\src\main\java\com\choisy\website\jwt\JwtConfig.java
 C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot\website\src\main\java\com\choisy\website\users\PagesController.java
 C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot\website\src\main\java\com\choisy\website\auth\ApplicationUserService.java
 C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot\website\src\main\java\com\choisy\website\auth\testApplicationUserService.java
+C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot\website\src\main\java\com\choisy\website\jwt\JwtTokenVerifier.java
+C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot\website\src\main\java\com\choisy\website\jwt\JwtSecretKey.java
 C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot\website\src\main\java\com\choisy\website\users\Services.java
 C:\Users\jagathine\workspace-spring-tool-suite-4-4.16.0.RELEASE\java_spring_boot\website\src\main\java\com\choisy\website\users\Utilisateurs.java

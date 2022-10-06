@@ -1,34 +1,23 @@
 package com.choisy.website.security;
 
-import java.util.concurrent.TimeUnit;
+import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfAuthenticationStrategy;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.thymeleaf.cache.AlwaysValidCacheEntryValidity;
 
 import com.choisy.website.auth.ApplicationUserService;
+import com.choisy.website.jwt.JwtConfig;
+import com.choisy.website.jwt.JwtTokenVerifier;
 import com.choisy.website.jwt.JwtUsernamePwdAuthFilter;
 
 @Configuration
@@ -36,12 +25,19 @@ import com.choisy.website.jwt.JwtUsernamePwdAuthFilter;
 public class SecurityApplication {
 
 	private final PasswordEncoder passwordEncoder;
-	private final ApplicationUserService applicationUserService; 
+	private final ApplicationUserService applicationUserService;
+	private final JwtConfig jwtConfig;
+	private final SecretKey secretKey;
 	
 	@Autowired
-	public SecurityApplication( PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService) {
+	public SecurityApplication( PasswordEncoder passwordEncoder, 
+	                            ApplicationUserService applicationUserService, 
+	                            JwtConfig jwtConfig,
+	                            SecretKey secretKey) {
 		this.passwordEncoder = passwordEncoder;
 		this.applicationUserService = applicationUserService;
+        this.jwtConfig = jwtConfig;
+        this.secretKey = secretKey;
 	}
 
 	@Bean
@@ -51,7 +47,8 @@ public class SecurityApplication {
         	.csrf(crsf -> crsf.disable())
         	.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         	.and()
-        	.addFilter(new JwtUsernamePwdAuthFilter(authentication -> authentication))
+        	.addFilter(new JwtUsernamePwdAuthFilter(authentication -> authentication, jwtConfig, secretKey))
+        	.addFilterAfter(new JwtTokenVerifier(jwtConfig, secretKey), JwtUsernamePwdAuthFilter.class)
             .authorizeHttpRequests(authz -> {authz
         	.antMatchers("/").permitAll()
         	.antMatchers("/api/**").hasRole(AppRole.USER.name())
